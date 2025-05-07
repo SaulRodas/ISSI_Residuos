@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 
@@ -9,6 +9,21 @@ function App() {
     console.log("Extrayendo datos insanos de la base de datos...");
   };
 
+  useEffect(() => {
+    try {
+      const loadRandomImage = () => {
+        const randomId = Math.floor(Math.random() * 826) + 1; // Rick and Morty API tiene 826 personajes
+        const url = `https://rickandmortyapi.com/api/character/avatar/${randomId}.jpeg`;
+        setImg(url);
+      };
+  
+      loadRandomImage();
+    } catch (e) {
+      console.error(e);
+    }
+    () => {};
+  }, []);
+
   return (
     <>
       <nav className="bg-[#778da9]">
@@ -17,7 +32,10 @@ function App() {
             Detección automática de residuos
           </h1>
           <div className="flex gap-4">
-            <button className="flex gap-2 items-center bg-[#f0f0f0] text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#62b6cb] hover:text-white transition duration-400 ease-in-out" onClick={click}>
+            <button
+              className="flex gap-2 items-center bg-[#f0f0f0] text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#62b6cb] hover:text-white transition duration-400 ease-in-out"
+              onClick={click}
+            >
               <p>Generar reporte</p>
               <i>
                 <svg
@@ -45,7 +63,7 @@ function App() {
         className="flex justify-center items-center"
         style={{ height: "calc(100vh - 4rem)" }}
       >
-        <img src={img} alt="" className="w-lvh" />
+        <img src={img} alt="" className="w-mvh" />
       </div>
     </>
   );
