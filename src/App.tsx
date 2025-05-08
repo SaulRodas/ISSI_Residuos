@@ -3,25 +3,18 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [img, setImg] = useState("./imagen.jpeg");
+  const [img, setImg] = useState("http://10.100.84.160:5000/video_feed");
 
   const click = () => {
     console.log("Extrayendo datos insanos de la base de datos...");
   };
 
   useEffect(() => {
-    try {
-      const loadRandomImage = () => {
-        const randomId = Math.floor(Math.random() * 826) + 1; // Rick and Morty API tiene 826 personajes
-        const url = `https://rickandmortyapi.com/api/character/avatar/${randomId}.jpeg`;
-        setImg(url);
-      };
-  
-      loadRandomImage();
-    } catch (e) {
-      console.error(e);
-    }
-    () => {};
+    const intervalId = setInterval(() => {
+      setImg(`http://10.100.84.160:5000/video_feed?time=${new Date().getTime()}`);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -63,7 +56,7 @@ function App() {
         className="flex justify-center items-center"
         style={{ height: "calc(100vh - 4rem)" }}
       >
-        <img src={img} alt="" className="w-mvh" />
+        <img src={img} alt="Video feed" className="w-mvh" />
       </div>
     </>
   );
